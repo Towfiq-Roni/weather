@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:weather/screens/weather_screen.dart';
+import 'package:weather/screens/weather_screen_gl.dart';
+import 'package:weather/screens/weather_screen_trial.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  // api = await _getData();
   runApp(const MyApp());
 }
 
@@ -15,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
-      home: const WeatherScreen(),
+      home: WeatherScreenTrial(),
     );
   }
 }
