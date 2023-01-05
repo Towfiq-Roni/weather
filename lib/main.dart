@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather/screens/bottom_navigation.dart';
 import 'package:weather/screens/weather_screen.dart';
 import 'package:weather/screens/weather_screen_gl.dart';
 import 'package:weather/screens/weather_screen_trial.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
-      home: WeatherScreenTrial(),
+      home: BasicBottomNavigation(),
     );
   }
 }

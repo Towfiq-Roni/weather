@@ -52,3 +52,20 @@
 //         " ${address.postal}";
 //   }
 // }
+
+///Futures
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+//
+// class Futures {
+//   Future<String> _getCity(double? latitude, double? longitude) async {
+//     String api = 'http://api.openweathermap.org/geo/1.0/reverse';
+//     String appID = '81c3b74680bb8bd275f8f4abf2d3dcf7';
+//     String baseUrl = '$api?lat=$latitude&lon=$longitude&APPID=$appID';
+//
+//     http.Response response = await http.get(Uri.parse(baseUrl));
+//     Map parsed = json.decode(response.body);
+//     var cityName = parsed['name'];
+//     return cityName;
+//   }
+// }

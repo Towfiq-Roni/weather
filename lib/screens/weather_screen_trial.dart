@@ -11,7 +11,6 @@ class WeatherScreenTrial extends StatefulWidget {
 }
 
 class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
-
   LocationData? locationData;
   String _weather = '';
 
@@ -22,13 +21,12 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
     _getCurrentLocation().then((value) {
       LocationData? location = value;
       // _getWeather(location?.latitude, location?.longitude).then((weather) {
-        setState(() {
-          locationData = value;
-          // _weather = weather;
+      setState(() {
+        locationData = value;
+        // _weather = weather;
         // });
       });
     });
-
 
     // _getPosition().then((position){
     //   _getPlacemark(position.latitude, position.longitude).then((value) {
@@ -41,8 +39,7 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
     //   });
     // });
 
-
-///Location and Address
+    ///Location and Address
 //     _getCurrentLocation().then((value) {
 //     // _getCurrentLocation().then((location) {
 //     LocationData? location = value;
@@ -57,47 +54,95 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
 //       });
 //     });
     // });
-///Location, Address and Weather
+    ///Location, Address and Weather
     // _getCurrentLocation().then((value) {
-      // _getCurrentLocation().then((location) {
-      // LocationData? location = value;
-      // _getAddress(location?.latitude, location?.longitude).then((value) {
-      //   _getWeather(location?.latitude, location?.longitude).then((weather) {
-      //     setState(() {
-      //       currentLocation = location;
-      //       address = value;
-      //       description = weather;
-      //     });
-      //   });
-      // });
+    // _getCurrentLocation().then((location) {
+    // LocationData? location = value;
+    // _getAddress(location?.latitude, location?.longitude).then((value) {
+    //   _getWeather(location?.latitude, location?.longitude).then((weather) {
+    //     setState(() {
+    //       currentLocation = location;
+    //       address = value;
+    //       description = weather;
+    //     });
+    //   });
+    // });
     // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      // extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.cyan,
+        elevation: 0,
+        title: Text('Weather', style: TextStyle(color: Colors.black87,
+            fontWeight:FontWeight.w900)),
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        // decoration: const BoxDecoration(
+        //     image: DecorationImage(
+        //   image: AssetImage("assets/images/day_background.webp"),
+        //   fit: BoxFit.cover,
+        // )),
+        child: Row(
           children: [
-            Text("Latitude: ${locationData?.latitude},"
-                " Longitude: ${locationData?.longitude}"),
             FutureBuilder(
-              future: _getWeather(locationData?.latitude, locationData?.longitude),
-                builder: (BuildContext context, AsyncSnapshot snapshot){
-                if(snapshot.hasData){
+                future: _getWeather(
+                    locationData?.latitude, locationData?.longitude),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  // final _temp = snapshot.data![0];
+                  // final _city = snapshot.data![1];
+                  if(!snapshot.hasData){
+                    return Center(child: CircularProgressIndicator(),);
+                  }
                   print(snapshot.data);
-                  return Text(_weather);
-                  // return ElevatedButton(onPressed:() async{
-                  //   _getWeather(locationData?.latitude, locationData?.longitude);
-                  // }, child: Text('Weather'));
-                }
-                return Text('Weather: $_weather');
-                })
-            // ElevatedButton(onPressed:() async{
-            //   _getWeather(locationData?.latitude, locationData?.longitude);
-            // }, child: Text('Weather')),
-            // Text('Weather: $_weather'),
+                  // if(int.parse(snapshot.data) < 15) {
+                  //   return Container(
+                  //     width: 10,
+                  //     height: 10,
+                  //     decoration: const BoxDecoration(
+                  //       image: DecorationImage(
+                  //         image: AssetImage("assets/images/day_background.webp"),
+                  //         fit: BoxFit.cover,
+                  //       )),);
+                  // }
+                  // else
+                  // {
+                  //   print(snapshot.data![0]);
+                  //   // return Text(_weather);
+                  //   // return ElevatedButton(onPressed:() async{
+                  //   //   _getWeather(locationData?.latitude, locationData?.longitude);
+                  //   // }, child: Text('Weather'));
+                  // }
+                  return Text('Weather ${snapshot.data}');
+                }),
+            Spacer(flex: 1,),
+            FutureBuilder(
+                future: _getCity(
+                    locationData?.latitude, locationData?.longitude),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  // final _temp = snapshot.data![0];
+                  // final _city = snapshot.data![1];
+                  if(!snapshot.hasData){
+                    return Center(child: CircularProgressIndicator(),);
+                  }
+                  print(snapshot.data);
+                  // else
+                  // {
+                  //   print(snapshot.data![0]);
+                  //   // return Text(_weather);
+                  //   // return ElevatedButton(onPressed:() async{
+                  //   //   _getWeather(locationData?.latitude, locationData?.longitude);
+                  //   // }, child: Text('Weather'));
+                  // }
+                  return Text('City ${snapshot.data}');
+                }),
           ],
         ),
       ),
@@ -136,8 +181,18 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
 
     http.Response response = await http.get(Uri.parse(baseUrl));
     Map parsed = json.decode(response.body);
+    var weatherInfo = parsed['main']['temp'];
+    return (weatherInfo-273.15).toStringAsFixed(2);
+  }
 
-    return parsed['list'][0]['weather'][0]['description'];
-    // as String;
+  Future<String> _getCity(double? latitude, double? longitude) async {
+    String api = 'http://api.openweathermap.org/geo/1.0/reverse';
+    String appID = '81c3b74680bb8bd275f8f4abf2d3dcf7';
+    String baseUrl = '$api?lat=$latitude&lon=$longitude&APPID=$appID';
+
+    http.Response response = await http.get(Uri.parse(baseUrl));
+    List<dynamic> parsed = json.decode(response.body);
+    var cityName = parsed[0]['name'];
+    return cityName.toString();
   }
 }
