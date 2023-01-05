@@ -79,12 +79,20 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
         centerTitle: true,
         backgroundColor: Colors.cyan,
         elevation: 0,
-        title: Text('Weather', style: TextStyle(color: Colors.black87,
-            fontWeight:FontWeight.w900)),
+        title: Text('Weather',
+            style:
+                TextStyle(color: Colors.black87, fontWeight: FontWeight.w900)),
       ),
       body: Column(
         children: [
           Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage("assets/images/day.gif"),
+              fit: BoxFit.cover,
+            )),
             child: Row(
               children: [
                 FutureBuilder(
@@ -93,8 +101,10 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       // final _temp = snapshot.data![0];
                       // final _city = snapshot.data![1];
-                      if(!snapshot.hasData){
-                        return Center(child: CircularProgressIndicator(),);
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
                       print(snapshot.data);
                       // if(int.parse(snapshot.data) < 15) {
@@ -117,15 +127,19 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
                       // }
                       return Text('Weather ${snapshot.data}');
                     }),
-                Spacer(flex: 1,),
+                Spacer(
+                  flex: 1,
+                ),
                 FutureBuilder(
                     future: _getCity(
                         locationData?.latitude, locationData?.longitude),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       // final _temp = snapshot.data![0];
                       // final _city = snapshot.data![1];
-                      if(!snapshot.hasData){
-                        return Center(child: CircularProgressIndicator(),);
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
                       print(snapshot.data);
                       // else
@@ -179,7 +193,7 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
     http.Response response = await http.get(Uri.parse(baseUrl));
     Map parsed = json.decode(response.body);
     var weatherInfo = parsed['main']['temp'];
-    return (weatherInfo-273.15).toStringAsFixed(2);
+    return (weatherInfo - 273.15).toStringAsFixed(2);
   }
 
   Future<String> _getCity(double? latitude, double? longitude) async {
