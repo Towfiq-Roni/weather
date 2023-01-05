@@ -82,69 +82,66 @@ class _WeatherScreenTrialState extends State<WeatherScreenTrial> {
         title: Text('Weather', style: TextStyle(color: Colors.black87,
             fontWeight:FontWeight.w900)),
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        // decoration: const BoxDecoration(
-        //     image: DecorationImage(
-        //   image: AssetImage("assets/images/day_background.webp"),
-        //   fit: BoxFit.cover,
-        // )),
-        child: Row(
-          children: [
-            FutureBuilder(
-                future: _getWeather(
-                    locationData?.latitude, locationData?.longitude),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  // final _temp = snapshot.data![0];
-                  // final _city = snapshot.data![1];
-                  if(!snapshot.hasData){
-                    return Center(child: CircularProgressIndicator(),);
-                  }
-                  print(snapshot.data);
-                  // if(int.parse(snapshot.data) < 15) {
-                  //   return Container(
-                  //     width: 10,
-                  //     height: 10,
-                  //     decoration: const BoxDecoration(
-                  //       image: DecorationImage(
-                  //         image: AssetImage("assets/images/day_background.webp"),
-                  //         fit: BoxFit.cover,
-                  //       )),);
-                  // }
-                  // else
-                  // {
-                  //   print(snapshot.data![0]);
-                  //   // return Text(_weather);
-                  //   // return ElevatedButton(onPressed:() async{
-                  //   //   _getWeather(locationData?.latitude, locationData?.longitude);
-                  //   // }, child: Text('Weather'));
-                  // }
-                  return Text('Weather ${snapshot.data}');
-                }),
-            Spacer(flex: 1,),
-            FutureBuilder(
-                future: _getCity(
-                    locationData?.latitude, locationData?.longitude),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  // final _temp = snapshot.data![0];
-                  // final _city = snapshot.data![1];
-                  if(!snapshot.hasData){
-                    return Center(child: CircularProgressIndicator(),);
-                  }
-                  print(snapshot.data);
-                  // else
-                  // {
-                  //   print(snapshot.data![0]);
-                  //   // return Text(_weather);
-                  //   // return ElevatedButton(onPressed:() async{
-                  //   //   _getWeather(locationData?.latitude, locationData?.longitude);
-                  //   // }, child: Text('Weather'));
-                  // }
-                  return Text('City ${snapshot.data}');
-                }),
-          ],
-        ),
+      body: Column(
+        children: [
+          Container(
+            child: Row(
+              children: [
+                FutureBuilder(
+                    future: _getWeather(
+                        locationData?.latitude, locationData?.longitude),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      // final _temp = snapshot.data![0];
+                      // final _city = snapshot.data![1];
+                      if(!snapshot.hasData){
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                      print(snapshot.data);
+                      // if(int.parse(snapshot.data) < 15) {
+                      //   return Container(
+                      //     width: 10,
+                      //     height: 10,
+                      //     decoration: const BoxDecoration(
+                      //       image: DecorationImage(
+                      //         image: AssetImage("assets/images/day_background.webp"),
+                      //         fit: BoxFit.cover,
+                      //       )),);
+                      // }
+                      // else
+                      // {
+                      //   print(snapshot.data![0]);
+                      //   // return Text(_weather);
+                      //   // return ElevatedButton(onPressed:() async{
+                      //   //   _getWeather(locationData?.latitude, locationData?.longitude);
+                      //   // }, child: Text('Weather'));
+                      // }
+                      return Text('Weather ${snapshot.data}');
+                    }),
+                Spacer(flex: 1,),
+                FutureBuilder(
+                    future: _getCity(
+                        locationData?.latitude, locationData?.longitude),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      // final _temp = snapshot.data![0];
+                      // final _city = snapshot.data![1];
+                      if(!snapshot.hasData){
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                      print(snapshot.data);
+                      // else
+                      // {
+                      //   print(snapshot.data![0]);
+                      //   // return Text(_weather);
+                      //   // return ElevatedButton(onPressed:() async{
+                      //   //   _getWeather(locationData?.latitude, locationData?.longitude);
+                      //   // }, child: Text('Weather'));
+                      // }
+                      return Text('City ${snapshot.data}');
+                    }),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
