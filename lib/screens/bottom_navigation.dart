@@ -30,7 +30,7 @@ class _BasicBottomNavigationState extends State<BasicBottomNavigation> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.white,
         selectedItemColor: Colors.amberAccent,
         unselectedItemColor: Colors.grey,
         // currentIndex: _selectedIndex,
