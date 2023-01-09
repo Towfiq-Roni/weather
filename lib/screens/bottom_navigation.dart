@@ -31,7 +31,7 @@ class _BasicBottomNavigationState extends State<BasicBottomNavigation> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.amberAccent,
+        selectedItemColor: Colors.cyan,
         unselectedItemColor: Colors.grey,
         // currentIndex: _selectedIndex,
         // onTap: (index) {

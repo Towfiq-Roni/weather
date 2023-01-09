@@ -6,7 +6,7 @@ import 'package:weather/const/api/api_constants.dart';
 import '../model/weather_model.dart';
 
 class ApiServiceWeather {
-  Future<WeatherModel?> getWeather(double? lat, double ?long) async{
+  Future<WeatherModel?> getWeather(double lat, double long) async{
     try{
       var url = Uri.parse(WeatherApiConstant.weatherUrl(lat, long));
  Response response = await get(url);
